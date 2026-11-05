@@ -1,0 +1,28 @@
+name: Sync design tokens
+
+# Recebe o evento `design-tokens-released` enviado pelo cicd-create-tokens após
+# uma release estável e abre/atualiza o PR `feat/design-tokens` → `develop`.
+# Também roda manualmente: informe uma versão para instalar uma pré-release (rc)
+# ou fazer rollback.
+
+on:
+  repository_dispatch:
+    types: [design-tokens-released]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Versão publicada no cicd-create-tokens (ex.: 1.2.0 ou 2.0.0-rc.1)'
+        type: string
+        required: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    uses: Davidfdesousa/cicd-create-tokens/.github/workflows/sync-design-tokens.yml@main
+    with:
+      version: ${{ github.event.client_payload.version || inputs.version }}
+      asset: tokens-web.zip
+    secrets: inherit

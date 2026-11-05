@@ -1,0 +1,77 @@
+name: Deploy
+
+# Promoção por branch:
+#   develop     → [DEV]  a cada merge (inclusive o PR automático de design tokens)
+#   release/**  → [HOM]  ao criar/atualizar uma branch de release
+#   main        → [PROD] ao promover a release
+#
+# Cada ambiente é um GitHub Environment (dev, hom, prod). Para exigir aprovação
+# em produção, adicione "Required reviewers" no environment `prod`.
+
+on:
+  push:
+    branches: [develop, 'release/**', main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  HUSKY: 0
+
+jobs:
+  deploy:
+    name: Deploy · ${{ github.ref_name == 'main' && 'prod' || startsWith(github.ref_name, 'release/') && 'hom' || 'dev' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: ${{ github.ref_name == 'main' && 'prod' || startsWith(github.ref_name, 'release/') && 'hom' || 'dev' }}
+    env:
+      ENVIRONMENT: ${{ github.ref_name == 'main' && 'prod' || startsWith(github.ref_name, 'release/') && 'hom' || 'dev' }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      # Gates
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - name: Validate design tokens
+        run: bash scripts/validate-design-tokens.sh
+      - run: npm run build
+
+      - name: Package
+        run: |
+          mkdir -p "$RUNNER_TEMP/bucket"
+          cp -r dist "$RUNNER_TEMP/bucket/app"
+          if [ -d design-tokens ]; then cp -r design-tokens "$RUNNER_TEMP/bucket/design-tokens"; fi
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bucket-${{ env.ENVIRONMENT }}-${{ github.sha }}
+          path: ${{ runner.temp }}/bucket
+          retention-days: 14
+
+      # Deploy simulado. Troque pelo upload real do bucket do ambiente, por exemplo:
+      #   aws s3 sync "$RUNNER_TEMP/bucket" "s3://${{ vars.BUCKET_NAME }}/" --delete
+      # com credenciais via OIDC (aws-actions/configure-aws-credentials).
+      - name: Deploy (simulado)
+        run: |
+          tokens=$(grep -rhoE 'Design tokens v[^ ]+' design-tokens 2>/dev/null | head -1 || true)
+          {
+            echo "### Deploy em \`$ENVIRONMENT\`"
+            echo "- Branch: \`$GITHUB_REF_NAME\` · commit \`${GITHUB_SHA::7}\`"
+            echo "- ${tokens:-Design tokens: nenhum}"
+            echo "- Artefato: \`bucket-$ENVIRONMENT-$GITHUB_SHA\`"
+          } >> "$GITHUB_STEP_SUMMARY"
