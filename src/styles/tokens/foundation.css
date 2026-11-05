@@ -1,0 +1,102 @@
+/*
+ * Foundation tokens — raw values with no meaning attached.
+ * Components must NOT use these directly: consume semantic tokens instead
+ * (see semantic.css). Foundation exists so themes have a single palette to map from.
+ */
+:root {
+  /* Palette · neutral */
+  --palette-neutral-0: oklch(100% 0 0);
+  --palette-neutral-50: oklch(98.5% 0.003 265);
+  --palette-neutral-100: oklch(96.5% 0.005 265);
+  --palette-neutral-200: oklch(92.5% 0.008 265);
+  --palette-neutral-300: oklch(86.5% 0.012 265);
+  --palette-neutral-400: oklch(71% 0.016 265);
+  --palette-neutral-500: oklch(55.5% 0.018 265);
+  --palette-neutral-600: oklch(44.5% 0.018 265);
+  --palette-neutral-700: oklch(37% 0.016 265);
+  --palette-neutral-800: oklch(27.5% 0.014 265);
+  --palette-neutral-900: oklch(21% 0.012 265);
+  --palette-neutral-950: oklch(15.5% 0.01 265);
+  --palette-neutral-1000: oklch(0% 0 0);
+
+  /* Palette · brand */
+  --palette-brand-50: oklch(96.5% 0.018 275);
+  --palette-brand-100: oklch(93% 0.036 275);
+  --palette-brand-200: oklch(87% 0.065 275);
+  --palette-brand-300: oklch(78% 0.11 275);
+  --palette-brand-400: oklch(67% 0.16 275);
+  --palette-brand-500: oklch(58% 0.2 275);
+  --palette-brand-600: oklch(51% 0.22 275);
+  --palette-brand-700: oklch(44.5% 0.2 275);
+  --palette-brand-800: oklch(38% 0.16 275);
+  --palette-brand-900: oklch(31% 0.12 275);
+
+  /* Palette · red */
+  --palette-red-50: oklch(97% 0.013 25);
+  --palette-red-100: oklch(93.5% 0.03 25);
+  --palette-red-400: oklch(70% 0.17 25);
+  --palette-red-500: oklch(63.5% 0.21 25);
+  --palette-red-700: oklch(50.5% 0.19 25);
+  --palette-red-900: oklch(30% 0.09 25);
+
+  /* Palette · green */
+  --palette-green-50: oklch(97.5% 0.02 150);
+  --palette-green-100: oklch(95% 0.05 150);
+  --palette-green-400: oklch(79% 0.17 150);
+  --palette-green-700: oklch(52.5% 0.13 150);
+  --palette-green-900: oklch(30% 0.06 150);
+
+  /* Size scale (base 4px) */
+  --size-0: 0;
+  --size-50: 0.125rem;
+  --size-100: 0.25rem;
+  --size-200: 0.5rem;
+  --size-300: 0.75rem;
+  --size-400: 1rem;
+  --size-500: 1.25rem;
+  --size-600: 1.5rem;
+  --size-800: 2rem;
+  --size-1000: 2.5rem;
+  --size-1200: 3rem;
+  --size-1600: 4rem;
+
+  /* Typography */
+  --font-family-sans:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-family-mono: ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, Consolas, monospace;
+
+  --font-size-75: 0.75rem;
+  --font-size-100: 0.875rem;
+  --font-size-200: 1rem;
+  --font-size-300: 1.125rem;
+  --font-size-400: 1.25rem;
+  --font-size-500: 1.5rem;
+  --font-size-700: 2rem;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+
+  /* Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 999px;
+
+  /* Motion */
+  --motion-duration-fast: 120ms;
+  --motion-duration-normal: 200ms;
+  --motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-duration-fast: 0ms;
+    --motion-duration-normal: 0ms;
+  }
+}

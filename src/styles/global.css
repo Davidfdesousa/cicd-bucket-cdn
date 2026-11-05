@@ -1,0 +1,35 @@
+@import './tokens/foundation.css';
+@import './tokens/semantic.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--color-bg-subtle);
+  color: var(--color-content-default);
+  font-family: var(--typography-font-family-base);
+  font-size: var(--typography-body-md-size);
+  line-height: var(--typography-body-line-height);
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-border-focus);
+  outline-offset: var(--focus-ring-offset);
+}

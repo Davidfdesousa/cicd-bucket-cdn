@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Starter com Vite, TypeScript, Web Components (Lit), tokens CSS, login Google (Firebase Auth) e semantic-release."
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Template Vite Web Components</title>
+    <script>
+      // Restores the saved theme before first paint to avoid a light/dark flash.
+      try {
+        const theme = localStorage.getItem('app:theme');
+        if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+      } catch {}
+    </script>
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body>
+    <app-root></app-root>
+  </body>
+</html>

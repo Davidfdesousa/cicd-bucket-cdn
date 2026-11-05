@@ -1,0 +1,126 @@
+/*
+ * Semantic tokens — the only tokens components should consume.
+ *
+ * Naming: --{category}-{role}-{variant}
+ *   category · color | spacing | typography | radius | shadow
+ *   role     · bg | content | border (color) · stack | inline | inset (spacing)
+ *   variant  · default | subtle | muted | strong | intense | hover | pressed
+ *
+ * Theming uses CSS light-dark(): each color token declares its light and dark
+ * value once, and the active `color-scheme` picks one. The scheme follows the
+ * OS by default and can be forced with [data-theme='light' | 'dark'] on <html>
+ * or on any element to theme just that subtree. Because color-scheme inherits,
+ * this also works inside Shadow DOM.
+ *
+ * The color block is scoped to `:root, [data-theme]` on purpose: the production
+ * build lowers light-dark() for older browsers, and that fallback resolves at the
+ * element where the token is declared, so each themed subtree must redeclare it.
+ */
+:root {
+  color-scheme: light dark;
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+:root,
+[data-theme] {
+  /* Color · background */
+  --color-bg-default: light-dark(var(--palette-neutral-0), var(--palette-neutral-900));
+  --color-bg-subtle: light-dark(var(--palette-neutral-50), var(--palette-neutral-950));
+  --color-bg-muted: light-dark(var(--palette-neutral-100), var(--palette-neutral-800));
+  --color-bg-strong: light-dark(var(--palette-neutral-200), var(--palette-neutral-700));
+  --color-bg-intense: light-dark(var(--palette-neutral-900), var(--palette-neutral-50));
+  --color-bg-neutral-hover: light-dark(var(--palette-neutral-100), var(--palette-neutral-800));
+  --color-bg-neutral-pressed: light-dark(var(--palette-neutral-200), var(--palette-neutral-700));
+  --color-bg-brand: light-dark(var(--palette-brand-600), var(--palette-brand-400));
+  --color-bg-brand-hover: light-dark(var(--palette-brand-700), var(--palette-brand-300));
+  --color-bg-brand-pressed: light-dark(var(--palette-brand-800), var(--palette-brand-200));
+  --color-bg-brand-subtle: light-dark(var(--palette-brand-50), var(--palette-brand-900));
+  --color-bg-danger-subtle: light-dark(var(--palette-red-50), var(--palette-red-900));
+  --color-bg-success-subtle: light-dark(var(--palette-green-50), var(--palette-green-900));
+
+  /* Color · content (text and icons) */
+  --color-content-default: light-dark(var(--palette-neutral-900), var(--palette-neutral-100));
+  --color-content-strong: light-dark(var(--palette-neutral-950), var(--palette-neutral-0));
+  --color-content-subtle: light-dark(var(--palette-neutral-600), var(--palette-neutral-300));
+  --color-content-muted: light-dark(var(--palette-neutral-500), var(--palette-neutral-400));
+  --color-content-on-intense: light-dark(var(--palette-neutral-0), var(--palette-neutral-950));
+  --color-content-on-brand: light-dark(var(--palette-neutral-0), var(--palette-neutral-950));
+  --color-content-brand: light-dark(var(--palette-brand-600), var(--palette-brand-300));
+  --color-content-danger: light-dark(var(--palette-red-700), var(--palette-red-400));
+  --color-content-success: light-dark(var(--palette-green-700), var(--palette-green-400));
+
+  /* Color · border */
+  --color-border-default: light-dark(var(--palette-neutral-200), var(--palette-neutral-800));
+  --color-border-strong: light-dark(var(--palette-neutral-300), var(--palette-neutral-700));
+  --color-border-focus: light-dark(var(--palette-brand-500), var(--palette-brand-400));
+  --color-border-danger: light-dark(var(--palette-red-500), var(--palette-red-400));
+
+  /* Color · shadow */
+  --color-shadow-subtle: light-dark(oklch(21% 0.012 265 / 0.06), oklch(0% 0 0 / 0.35));
+  --color-shadow-strong: light-dark(oklch(21% 0.012 265 / 0.1), oklch(0% 0 0 / 0.5));
+
+  /* Elevation */
+  --shadow-sm: 0 1px 2px var(--color-shadow-subtle);
+  --shadow-md: 0 4px 12px var(--color-shadow-strong), 0 1px 3px var(--color-shadow-subtle);
+}
+
+/* Theme-independent semantic tokens */
+:root {
+  /* Spacing · stack (vertical rhythm between blocks) */
+  --spacing-stack-2xs: var(--size-100);
+  --spacing-stack-xs: var(--size-200);
+  --spacing-stack-sm: var(--size-300);
+  --spacing-stack-md: var(--size-400);
+  --spacing-stack-lg: var(--size-600);
+  --spacing-stack-xl: var(--size-800);
+  --spacing-stack-2xl: var(--size-1200);
+
+  /* Spacing · inline (horizontal gap between siblings) */
+  --spacing-inline-2xs: var(--size-100);
+  --spacing-inline-xs: var(--size-200);
+  --spacing-inline-sm: var(--size-300);
+  --spacing-inline-md: var(--size-400);
+  --spacing-inline-lg: var(--size-600);
+
+  /* Spacing · inset (padding inside containers) */
+  --spacing-inset-xs: var(--size-100);
+  --spacing-inset-sm: var(--size-200);
+  --spacing-inset-md: var(--size-400);
+  --spacing-inset-lg: var(--size-600);
+  --spacing-inset-xl: var(--size-800);
+
+  /* Typography */
+  --typography-font-family-base: var(--font-family-sans);
+  --typography-font-family-code: var(--font-family-mono);
+
+  --typography-body-sm-size: var(--font-size-100);
+  --typography-body-md-size: var(--font-size-200);
+  --typography-body-line-height: var(--line-height-normal);
+
+  --typography-title-sm-size: var(--font-size-400);
+  --typography-title-md-size: var(--font-size-500);
+  --typography-title-lg-size: var(--font-size-700);
+  --typography-title-weight: var(--font-weight-semibold);
+  --typography-title-line-height: var(--line-height-tight);
+
+  --typography-label-size: var(--font-size-100);
+  --typography-label-weight: var(--font-weight-medium);
+
+  /* Shape */
+  --radius-control: var(--radius-md);
+  --radius-surface: var(--radius-lg);
+
+  /* Focus */
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+
+  /* Layout */
+  --layout-content-max-width: 72rem;
+}

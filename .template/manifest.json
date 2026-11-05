@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "variables": {
+    "name": "template-vite-webcomponents",
+    "title": "Template Vite Web Components",
+    "description": "Starter com Vite, TypeScript, Web Components (Lit), tokens CSS, login Google (Firebase Auth) e semantic-release."
+  },
+  "files": [
+    "package.json",
+    "package-lock.json",
+    "index.html",
+    "README.md",
+    "AGENTS.md",
+    "src/config/app.config.ts"
+  ],
+  "remove": [".template", "CHANGELOG.md"],
+  "packageJson": {
+    "version": "0.0.0"
+  },
+  "format": "prettier"
+}
