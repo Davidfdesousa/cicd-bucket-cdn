@@ -22,6 +22,18 @@ Starter com Vite, TypeScript, Web Components (Lit), tokens CSS, login Google (Fi
 - **Versionamento:** Conventional Commits (commitlint + husky) + semantic-release
 - **CI/CD:** GitHub Actions (CI em PR, release na `main`) + Dependabot
 
+## Design tokens
+
+Os tokens chegam **automaticamente** do [cicd-create-tokens](https://github.com/Davidfdesousa/cicd-create-tokens). Não copie nem edite os arquivos de `design-tokens/` à mão.
+
+1. Uma release estável no `cicd-create-tokens` envia o evento `design-tokens-released` para este repositório.
+2. O workflow **Sync design tokens** baixa o pacote `tokens-web.zip` (Web (CSS + JSON)) da release, substitui `design-tokens/` (`tokens.css`, `tokens.json`) e abre ou atualiza o PR `feat/design-tokens` → `develop`.
+3. O CI valida o PR (job **Validate design tokens**, `scripts/validate-design-tokens.sh`). Depois do merge, o workflow **Deploy** promove: `develop` [DEV] → `release/*` [HOM] → `main` [PROD].
+
+Para instalar uma versão específica (uma pré-release `rc` ou um rollback): **Actions → Sync design tokens → Run workflow** e informe a versão.
+
+Requer o secret `SYNC_TOKEN` (fine-grained PAT com _Contents_ e _Pull requests: read & write_ neste repositório) para que o CI rode no PR automático.
+
 ## Primeiros passos
 
 1. Use o Node da versão do projeto: `nvm use` (Node 24)
