@@ -63,13 +63,7 @@ jobs:
       - run: npm run build
 
   design-tokens:
-    name: Validate design tokens
     if: github.event.action != 'edited'
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          persist-credentials: false
-
-      - run: bash scripts/validate-design-tokens.sh
+    uses: Davidfdesousa/cicd-workflows/.github/workflows/tokens-validate.yml@v1
+    with:
+      platform: web

@@ -28,11 +28,13 @@ Os tokens chegam **automaticamente** do [cicd-create-tokens](https://github.com/
 
 1. Uma release estável no `cicd-create-tokens` envia o evento `design-tokens-released` para este repositório.
 2. O workflow **Sync design tokens** baixa o pacote `tokens-web.zip` (Web (CSS + JSON)) da release, substitui `design-tokens/` (`tokens.css`, `tokens.json`) e abre ou atualiza o PR `feat/design-tokens` → `develop`.
-3. O CI valida o PR (job **Validate design tokens**, `scripts/validate-design-tokens.sh`). Depois do merge, o workflow **Deploy** promove: `develop` [DEV] → `release/*` [HOM] → `main` [PROD].
+3. O CI valida o PR (job **Validate design tokens**). Depois do merge, o workflow **Deploy** promove: `develop` [DEV] → `release/*` [HOM] → `main` [PROD].
 
 Para instalar uma versão específica (uma pré-release `rc` ou um rollback): **Actions → Sync design tokens → Run workflow** e informe a versão.
 
-Requer o secret `SYNC_TOKEN` (fine-grained PAT com _Contents_ e _Pull requests: read & write_ neste repositório) para que o CI rode no PR automático.
+Os workflows de sync, validação e deploy vêm do [cicd-workflows](https://github.com/Davidfdesousa/cicd-workflows) (`@v1`); o passo a passo de implementação está no README dele.
+
+Requer o secret `SYNC_TOKEN` (fine-grained PAT com _Contents_ e _Pull requests: read & write_ neste repositório) para que o CI rode no PR automático, e a variável `TOKENS_SOURCE_REPOSITORY` (`Davidfdesousa/cicd-create-tokens`) para a execução manual.
 
 ## Primeiros passos
 
