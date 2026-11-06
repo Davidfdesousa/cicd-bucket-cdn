@@ -1,6 +1,6 @@
 {
   "name": "template-vite-webcomponents",
-  "version": "1.0.0",
+  "version": "1.0.0-beta.1",
   "private": true,
   "description": "Starter com Vite, TypeScript, Web Components (Lit), tokens CSS, login Google (Firebase Auth) e semantic-release.",
   "type": "module",
