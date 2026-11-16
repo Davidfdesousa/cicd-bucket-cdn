@@ -24,7 +24,7 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "firebase": "^13.2.0",
+    "firebase": "^13.3.0",
     "lit": "^3.3.3"
   },
   "devDependencies": {
